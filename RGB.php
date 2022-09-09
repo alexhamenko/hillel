@@ -13,15 +13,10 @@ class RGB
 		$this->setBlue($blue);
 	}
 
-	private function setRed(int $value)
+	private function setRed(int $redValue)
 	{
-		if ($value < 0) {
-			throw new InvalidArgumentException('Argument value is less than 0');
-		}
-		if ($value > 255) {
-			throw new InvalidArgumentException('Argument value is greater than 255');
-		}
-		$this->red = $value;
+		$this->validateRGBValue($redValue);
+		$this->red = $redValue;
 	}
 
 	public function getRed(): int
@@ -29,15 +24,10 @@ class RGB
 		return $this->red;
 	}
 
-	private function setGreen(int $value)
+	private function setGreen(int $greenValue)
 	{
-		if ($value < 0) {
-			throw new InvalidArgumentException('Argument value is less than 0');
-		}
-		if ($value > 255) {
-			throw new InvalidArgumentException('Argument value is greater than 255');
-		}
-		$this->green = $value;
+		$this->validateRGBValue($greenValue);
+		$this->green = $greenValue;
 	}
 
 	public function getGreen(): int
@@ -45,7 +35,18 @@ class RGB
 		return $this->green;
 	}
 
-	private function setBlue(int $value)
+	private function setBlue(int $blueValue)
+	{
+		$this->validateRGBValue($blueValue);
+		$this->blue = $blueValue;
+	}
+
+	public function getBlue(): int
+	{
+		return $this->blue;
+	}
+
+	private function validateRGBValue(int $value)
 	{
 		if ($value < 0) {
 			throw new InvalidArgumentException('Argument value is less than 0');
@@ -53,12 +54,6 @@ class RGB
 		if ($value > 255) {
 			throw new InvalidArgumentException('Argument value is greater than 255');
 		}
-		$this->blue = $value;
-	}
-
-	public function getBlue(): int
-	{
-		return $this->blue;
 	}
 
 	public function equals(RGB $objectRGB): bool
