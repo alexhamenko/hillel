@@ -1,7 +1,17 @@
 {
+  "config": {
+    "platform": {
+      "php": "7.4"
+    }
+  },
   "autoload": {
     "psr-4": {
       "Hillel\\Application\\": "src"
     }
+  },
+  "require": {
+    "illuminate/database": "^8.83",
+    "illuminate/events": "^8.83",
+    "joshtronic/php-loremipsum": "^2.1"
   }
 }
