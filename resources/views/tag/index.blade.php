@@ -45,8 +45,9 @@
                 <th>{{ $tag['created_at'] }}</th>
                 <th>{{ $tag['updated_at'] }}</th>
                 <th class="d-grid gap-2">
-                    <a href="/tag/update.php?id={{ $tag['id'] }}" class="btn btn-success">Update</a>
-                    <a href="/tag/delete.php?id={{ $tag['id'] }}" class="btn btn-danger">Delete</a>
+                    <a href="/tag/{{ $tag['id'] }}/show" class="btn btn-primary">Show</a>
+                    <a href="/tag/{{ $tag['id'] }}/edit" class="btn btn-success">Update</a>
+                    <a href="/tag/{{ $tag['id'] }}/delete" class="btn btn-danger">Delete</a>
                 </th>
             </tr>
         @empty
@@ -55,5 +56,5 @@
         </tbody>
     </table>
 
-    <a href="/tag/create.php" class="btn btn-primary">Create New Tag</a>
+    <a href="/tag/create" class="btn btn-primary">Create New Tag</a>
 @endsection()

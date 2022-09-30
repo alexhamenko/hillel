@@ -6,13 +6,14 @@
   },
   "autoload": {
     "psr-4": {
-      "Hillel\\Application\\": "src"
+      "Hillel\\": "src"
     }
   },
   "require": {
     "illuminate/database": "^8.83",
     "illuminate/events": "^8.83",
     "illuminate/view": "^8.83",
-    "guzzlehttp/guzzle": "^7.5"
+    "guzzlehttp/guzzle": "^7.5",
+    "illuminate/routing": "^8.83"
   }
 }
