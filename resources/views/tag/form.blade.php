@@ -9,14 +9,12 @@
 @section('content')
     @if($action === 'create')
         <h1>Create new tag</h1>
+        <form action="/tag/store" method="post" class="mb-3">
     @elseif($action === 'update')
         <h1>Update tag</h1>
-    @endif
-
-    <form method="post">
-        @if($action === 'update')
+        <form action="/tag/update" method="post" class="mb-3">
             <input type="hidden" value="{{ $tag->id }}" name="id">
-        @endif
+    @endif
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control" id="title" name="title" value="{{ $tag->title }}">
@@ -27,4 +25,6 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+
+    <a href="/tag" class="btn btn-secondary">Return to the tags list</a>
 @endsection()

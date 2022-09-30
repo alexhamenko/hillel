@@ -45,8 +45,9 @@
                 <th>{{ $category['created_at'] }}</th>
                 <th>{{ $category['updated_at'] }}</th>
                 <th class="d-grid gap-2">
-                    <a href="/category/update.php?id={{ $category['id'] }}" class="btn btn-success">Update</a>
-                    <a href="/category/delete.php?id={{ $category['id'] }}" class="btn btn-danger">Delete</a>
+                    <a href="/category/{{ $category['id'] }}/show" class="btn btn-primary">Show</a>
+                    <a href="/category/{{ $category['id'] }}/edit" class="btn btn-success">Update</a>
+                    <a href="/category/{{ $category['id'] }}/delete" class="btn btn-danger">Delete</a>
                 </th>
             </tr>
         @empty
@@ -55,5 +56,5 @@
         </tbody>
     </table>
 
-    <a href="/category/create.php" class="btn btn-primary">Create New Category</a>
+    <a href="/category/create" class="btn btn-primary">Create New Category</a>
 @endsection()

@@ -1,6 +1,6 @@
 <?php
 
-namespace Hillel\Application\Models;
+namespace Hillel\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
