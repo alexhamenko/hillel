@@ -1,14 +1,14 @@
 @extends('layout')
 
-@section('title', 'Create tag')
+@section('title', 'Update tag')
 
 @section('content')
-    <h1>Create new tag</h1>
-    <form action="/tag/store" method="post" class="mb-3">
+    <h1>Update tag</h1>
+    <form action="/tag/update" method="post" class="mb-3">
+        <input type="hidden" value="{{ $tag->id }}" name="id">
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title"
-                   value="{{ $_SESSION['data']['title'] ?? '' }}">
+            <input type="text" class="form-control" id="title" name="title" value="{{ $tag->title }}">
 
             @isset($_SESSION['errors']['title'])
                 @foreach($_SESSION['errors']['title'] as $error)
@@ -18,7 +18,7 @@
         </div>
         <div class="mb-3">
             <label for="slug" class="form-label">Slug</label>
-            <input type="text" class="form-control" id="slug" name="slug" value="{{ $_SESSION['data']['slug'] ?? '' }}">
+            <input type="text" class="form-control" id="slug" name="slug" value="{{ $tag->slug }}">
 
             @isset($_SESSION['errors']['slug'])
                 @foreach($_SESSION['errors']['slug'] as $error)
@@ -30,7 +30,8 @@
             <label for="posts">Select posts</label>
             <select class="form-select" name="posts[]" id="posts" multiple>
                 @foreach($posts as $post)
-                    <option value="{{$post->id}}">{{$post->title}}</option>
+                    <option @if(in_array($post->id, $tag->posts->pluck('id')->toArray())) selected
+                            @endif value="{{$post->id}}">{{$post->title}}</option>
                 @endforeach
             </select>
 

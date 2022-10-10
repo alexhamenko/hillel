@@ -3,7 +3,9 @@
 namespace Hillel\Controllers;
 
 use Hillel\Models\Category;
+use Hillel\Models\Post;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\Rule;
 
 class CategoryController
 {
@@ -24,44 +26,96 @@ class CategoryController
     public function create()
     {
         $category = new Category();
+        $posts = Post::all();
 
-        return view('category/form', [
-            'category' => $category,
-            'action' => 'create'
-        ]);
+        return view('category/form', compact('category', 'posts'));
     }
 
     public function store()
     {
-        $request = request();
+
+        $data = request()->all();
+
+        $validator = validator()->make($data, [
+            'title' => ['required', 'min:3'],
+            'slug' => [
+                'required',
+                'min:3',
+                'alpha_num',
+                'unique:Hillel\Models\Category,slug'
+            ],
+            'posts' => [
+                'required',
+                'exists:Hillel\Models\Post,id'
+            ]
+        ]);
+
+        if($validator->fails()) {
+            $_SESSION['errors'] = $validator->errors()->toArray();
+            $_SESSION['data'] = $data;
+            return new RedirectResponse($_SERVER['HTTP_REFERER']);
+        }
 
         $category = new Category();
-        $category->title = $request->input('title');
-        $category->slug = $request->input('slug');
+        $category->title = $data['title'];
+        $category->slug = $data['slug'];
         $category->save();
 
+        $_SESSION['success'] = 'Category ' . $data['title'] . ' was successfully created';
         return new RedirectResponse('/category');
     }
 
     public function edit($id)
     {
         $category = Category::find($id);
+        $posts = Post::all();
 
-        return view('category/form', [
-            'category' => $category,
-            'action' => 'update'
-        ]);
+        return view('category/form-edit', compact('category', 'posts'));
     }
 
     public function update()
     {
-        $request = request();
+        $data = request()->all();
 
-        $category = Category::find($request->input('id'));
-        $category->title = $request->input('title');
-        $category->slug = $request->input('slug');
+        $category = Category::find($data['id']);
+
+        $validator = validator()->make($data, [
+            'title' => ['required', 'min:3'],
+            'slug' => [
+                'required',
+                'min:3',
+                'alpha_num',
+                Rule::unique('categories', 'slug')->ignore($category->id),
+            ],
+            'posts' => [
+                'required',
+                'exists:Hillel\Models\Post,id'
+            ]
+        ]);
+
+        if($validator->fails()) {
+            $_SESSION['errors'] = $validator->errors()->toArray();
+            $_SESSION['data'] = $data;
+            return new RedirectResponse($_SERVER['HTTP_REFERER']);
+        }
+
+        $category->title = $data['title'];
+        $category->slug = $data['slug'];
+        foreach ($data['posts'] as $post_id) {
+            $post = Post::find($post_id);
+            $post->category_id = $data['id'];
+            $post->save();
+        }
         $category->save();
 
+        $_SESSION['success'] = 'Category ' . $data['title'] . ' was successfully updated';
+        return new RedirectResponse('/category');
+    }
+
+    public function detachpost($id, $post_id)
+    {
+        $category = Category::find($id);
+        $category->posts()->where('id', $post_id)->update(['category_id' => null]);
         return new RedirectResponse('/category');
     }
 

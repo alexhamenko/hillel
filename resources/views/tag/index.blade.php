@@ -11,6 +11,11 @@
                 'current' => false
             ],
             [
+                'link' => '/post',
+                'name' => 'Posts List',
+                'current' => false
+            ],
+            [
                 'link' => '/category',
                 'name' => 'Categories List',
                 'current' => false
@@ -31,6 +36,7 @@
             <th scope="col">#</th>
             <th scope="col">Title</th>
             <th scope="col">Slug</th>
+            <th scope="col">Posts</th>
             <th scope="col">Created At</th>
             <th scope="col">Updated At</th>
             <th scope="col">Actions</th>
@@ -42,6 +48,11 @@
                 <th>{{ $tag['id'] }}</th>
                 <th>{{ $tag['title'] }}</th>
                 <th>{{ $tag['slug'] }}</th>
+                <th>
+                    @foreach($tag->posts as $post)
+                        <a href="/post/{{ $post->id }}/show">{{ $post->title }}</a>
+                    @endforeach
+                </th>
                 <th>{{ $tag['created_at'] }}</th>
                 <th>{{ $tag['updated_at'] }}</th>
                 <th class="d-grid gap-2">
