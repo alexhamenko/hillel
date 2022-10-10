@@ -46,7 +46,6 @@ class PostController
                 'unique:Hillel\Models\Post,slug'
             ],
             'category_id' => [
-                'required',
                 'exists:Hillel\Models\Category,id'
             ],
             'tags' => [
@@ -97,7 +96,6 @@ class PostController
                 Rule::unique('posts', 'slug')->ignore($post->id),
             ],
             'category_id' => [
-                'required',
                 'exists:Hillel\Models\Category,id'
             ],
             'tags' => [
