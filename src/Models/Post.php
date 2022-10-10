@@ -11,6 +11,7 @@ class Post extends Model
         return $this->belongsTo(Category::class)->withDefault([
             'id' => '1',
             'title' => 'Default category',
+            'slug' => 'default',
         ]);
     }
 
