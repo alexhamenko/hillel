@@ -46,6 +46,7 @@ class PostController
                 'unique:Hillel\Models\Post,slug'
             ],
             'category_id' => [
+                'required',
                 'exists:Hillel\Models\Category,id'
             ],
             'tags' => [
@@ -54,7 +55,7 @@ class PostController
             ]
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             $_SESSION['errors'] = $validator->errors()->toArray();
             $_SESSION['data'] = $data;
             return new RedirectResponse($_SERVER['HTTP_REFERER']);
@@ -96,6 +97,7 @@ class PostController
                 Rule::unique('posts', 'slug')->ignore($post->id),
             ],
             'category_id' => [
+                'required',
                 'exists:Hillel\Models\Category,id'
             ],
             'tags' => [
@@ -104,7 +106,7 @@ class PostController
             ],
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             $_SESSION['errors'] = $validator->errors()->toArray();
             $_SESSION['data'] = $data;
             return new RedirectResponse($_SERVER['HTTP_REFERER']);
