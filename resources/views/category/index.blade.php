@@ -59,8 +59,10 @@
                         <div class="btn btn-primary btn-post d-inline-flex mb-2 me-2"
                              style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem;">
                             {{ $post->title }}
-                            <a href="/category/{{ $category['id'] }}/detachpost/{{ $post['id'] }}"
-                               class="btn btn-close ms-1"></a>
+                            @if($category['id'] !== 1)
+                                <a href="/category/{{ $category['id'] }}/detachpost/{{ $post['id'] }}"
+                                   class="btn btn-close ms-1"></a>
+                            @endif
                         </div>
                     @endforeach
                 </th>
@@ -68,27 +70,21 @@
                 <th>{{ $category['updated_at'] }}</th>
                 <th class="d-grid gap-2">
                     <a href="/category/{{ $category['id'] }}/show" class="btn btn-primary">Show</a>
-                    <a href="/category/{{ $category['id'] }}/edit" class="btn btn-success">Update</a>
-                    @if($category->posts()->count() > 0)
-                        <div
-                                class="d-grid gap-2"
-                                data-bs-toggle="tooltip"
-                                data-bs-title="Can't delete category related to posts"
-                                data-bs-placement="left"
-                        >
-                            <a href="/category/{{ $category['id'] }}/delete" class="btn btn-danger disabled">Delete</a>
-                        </div>
-                    @elseif($category['id'] === 1)
-                        <div
-                                class="d-grid gap-2"
-                                data-bs-toggle="tooltip"
-                                data-bs-title="Can't delete default category"
-                                data-bs-placement="left"
-                        >
-                            <a href="/category/{{ $category['id'] }}/delete" class="btn btn-danger disabled">Delete</a>
-                        </div>
-                    @else
-                        <a href="/category/{{ $category['id'] }}/delete" class="btn btn-danger">Delete</a>
+                    @if($category['id'] !== 1)
+                        <a href="/category/{{ $category['id'] }}/edit" class="btn btn-success">Update</a>
+                        @if($category->posts()->count() > 0)
+                            <div
+                                    class="d-grid gap-2"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-title="Can't delete category related to posts"
+                                    data-bs-placement="left"
+                            >
+                                <a href="/category/{{ $category['id'] }}/delete"
+                                   class="btn btn-danger disabled">Delete</a>
+                            </div>
+                        @else
+                            <a href="/category/{{ $category['id'] }}/delete" class="btn btn-danger">Delete</a>
+                        @endif
                     @endif
                 </th>
             </tr>

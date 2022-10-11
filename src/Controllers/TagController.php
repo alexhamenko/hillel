@@ -49,7 +49,7 @@ class TagController
             ]
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             $_SESSION['errors'] = $validator->errors()->toArray();
             $_SESSION['data'] = $data;
             return new RedirectResponse($_SERVER['HTTP_REFERER']);
@@ -93,7 +93,7 @@ class TagController
             ]
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             $_SESSION['errors'] = $validator->errors()->toArray();
             $_SESSION['data'] = $data;
             return new RedirectResponse($_SERVER['HTTP_REFERER']);

@@ -8,11 +8,7 @@ class Post extends Model
 {
     public function category()
     {
-        return $this->belongsTo(Category::class)->withDefault([
-            'id' => '1',
-            'title' => 'Default category',
-            'slug' => 'default',
-        ]);
+        return $this->belongsTo(Category::class);
     }
 
     public function tags()

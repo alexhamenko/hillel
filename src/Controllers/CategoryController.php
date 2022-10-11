@@ -50,16 +50,20 @@ class CategoryController
             ]
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             $_SESSION['errors'] = $validator->errors()->toArray();
             $_SESSION['data'] = $data;
             return new RedirectResponse($_SERVER['HTTP_REFERER']);
         }
-
         $category = new Category();
         $category->title = $data['title'];
         $category->slug = $data['slug'];
         $category->save();
+        foreach ($data['posts'] as $post_id) {
+            $post = Post::find($post_id);
+            $post->category_id = $category->id;
+            $post->save();
+        }
 
         $_SESSION['success'] = 'Category ' . $data['title'] . ' was successfully created';
         return new RedirectResponse('/category');
@@ -93,7 +97,7 @@ class CategoryController
             ]
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             $_SESSION['errors'] = $validator->errors()->toArray();
             $_SESSION['data'] = $data;
             return new RedirectResponse($_SERVER['HTTP_REFERER']);
@@ -115,7 +119,7 @@ class CategoryController
     public function detachpost($id, $post_id)
     {
         $category = Category::find($id);
-        $category->posts()->where('id', $post_id)->update(['category_id' => null]);
+        $category->posts()->where('id', $post_id)->update(['category_id' => 1]);
         return new RedirectResponse('/category');
     }
 
