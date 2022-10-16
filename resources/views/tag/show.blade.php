@@ -1,4 +1,4 @@
-@extends('components.layout')
+@extends('layout')
 
 @section('title', "$tag->title page")
 

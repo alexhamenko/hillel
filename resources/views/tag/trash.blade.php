@@ -1,4 +1,4 @@
-@extends('components.layout')
+@extends('layout')
 
 @section('title', 'Trashed tags')
 
@@ -80,4 +80,4 @@
         @endforelse
         </tbody>
     </table>
-@endsection()
+@endsection
