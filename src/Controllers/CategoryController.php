@@ -129,4 +129,26 @@ class CategoryController
         $category->delete();
         return new RedirectResponse('/category');
     }
+
+    public function trash()
+    {
+        $categories = Category::onlyTrashed()->get();
+        return view('category/trash', compact('categories'));
+    }
+
+    public function restore($id)
+    {
+        Category::withTrashed()
+            ->where('id', $id)
+            ->restore();
+        return new RedirectResponse('/category');
+    }
+
+    public function forceDelete($id)
+    {
+        Category::onlyTrashed()
+            ->find($id)
+            ->forceDelete();
+        return new RedirectResponse('/category');
+    }
 }

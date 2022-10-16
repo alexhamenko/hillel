@@ -111,8 +111,32 @@ class TagController
     public function destroy($id)
     {
         $tag = Tag::find($id);
-        $tag->posts()->detach();
         $tag->delete();
+        return new RedirectResponse('/tag');
+    }
+    public function trash()
+    {
+        $tags = Tag::onlyTrashed()->get();
+        return view('tag/trash', compact('tags'));
+    }
+
+    public function restore($id)
+    {
+        Tag::withTrashed()
+            ->where('id', $id)
+            ->restore();
+        return new RedirectResponse('/tag');
+    }
+
+    public function forceDelete($id)
+    {
+        Tag::onlyTrashed()
+            ->find($id)
+            ->posts()
+            ->detach();
+        Tag::onlyTrashed()
+            ->find($id)
+            ->forceDelete();
         return new RedirectResponse('/tag');
     }
 }

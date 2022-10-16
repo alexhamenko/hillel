@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('components.layout')
 
 @section('title', 'Main page')
 
@@ -10,20 +10,41 @@
                 'name' => 'Home',
                 'current' => true
             ],
-            [
-                'link' => '/post',
-                'name' => 'Posts List',
-                'current' => false
+            'Posts' => [
+                [
+                    'link' => '/post',
+                    'name' => 'Active',
+                    'current' => false
+                ],
+                [
+                    'link' => '/post/trash',
+                    'name' => 'Trashed',
+                    'current' => false
+                ]
             ],
-            [
-                'link' => '/category',
-                'name' => 'Categories List',
-                'current' => false
+            'Categories' => [
+                [
+                    'link' => '/category',
+                    'name' => 'Active',
+                    'current' => false
+                ],
+                [
+                    'link' => '/category/trash',
+                    'name' => 'Trashed',
+                    'current' => false
+                ]
             ],
-            [
-                'link' => '/tag',
-                'name' => 'Tags List',
-                'current' => false
+            'Tags' => [
+                [
+                    'link' => '/tag',
+                    'name' => 'Active',
+                    'current' => false
+                ],
+                [
+                    'link' => '/tag/trash',
+                    'name' => 'Trashed',
+                    'current' => false
+                ]
             ],
         ]
     ])
