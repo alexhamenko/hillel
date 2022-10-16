@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('components.layout')
 
 @section('title', 'Categories list')
 
@@ -10,20 +10,41 @@
                 'name' => 'Home',
                 'current' => false
             ],
-            [
-                'link' => '/post',
-                'name' => 'Posts List',
-                'current' => false
+            'Posts' => [
+                [
+                    'link' => '/post',
+                    'name' => 'Active',
+                    'current' => false
+                ],
+                [
+                    'link' => '/post/trash',
+                    'name' => 'Trashed',
+                    'current' => false
+                ]
             ],
-            [
-                'link' => '/category',
-                'name' => 'Categories List',
-                'current' => true
+            'Categories' => [
+                [
+                    'link' => '/category',
+                    'name' => 'Active',
+                    'current' => true
+                ],
+                [
+                    'link' => '/category/trash',
+                    'name' => 'Trashed',
+                    'current' => false
+                ]
             ],
-            [
-                'link' => '/tag',
-                'name' => 'Tags List',
-                'current' => false
+            'Tags' => [
+                [
+                    'link' => '/tag',
+                    'name' => 'Active',
+                    'current' => false
+                ],
+                [
+                    'link' => '/tag/trash',
+                    'name' => 'Trashed',
+                    'current' => false
+                ]
             ],
         ]
     ])
@@ -51,27 +72,27 @@
         <tbody>
         @forelse($categories as $category)
             <tr>
-                <th>{{ $category['id'] }}</th>
-                <th>{{ $category['title'] }}</th>
-                <th>{{ $category['slug'] }}</th>
+                <th>{{ $category->id }}</th>
+                <th>{{ $category->title }}</th>
+                <th>{{ $category->slug }}</th>
                 <th>
                     @foreach($category->posts as $post)
                         <div class="btn btn-primary btn-post d-inline-flex mb-2 me-2"
                              style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem;">
                             {{ $post->title }}
-                            @if($category['id'] !== 1)
-                                <a href="/category/{{ $category['id'] }}/detachpost/{{ $post['id'] }}"
+                            @if($category->id !== 1)
+                                <a href="/category/{{ $category->id }}/detachpost/{{ $post->id }}"
                                    class="btn btn-close ms-1"></a>
                             @endif
                         </div>
                     @endforeach
                 </th>
-                <th>{{ $category['created_at'] }}</th>
-                <th>{{ $category['updated_at'] }}</th>
+                <th>{{ $category->created_at }}</th>
+                <th>{{ $category->updated_at }}</th>
                 <th class="d-grid gap-2">
-                    <a href="/category/{{ $category['id'] }}/show" class="btn btn-primary">Show</a>
-                    @if($category['id'] !== 1)
-                        <a href="/category/{{ $category['id'] }}/edit" class="btn btn-success">Update</a>
+                    <a href="/category/{{ $category->id }}/show" class="btn btn-primary">Show</a>
+                    @if($category->id !== 1)
+                        <a href="/category/{{ $category->id }}/edit" class="btn btn-success">Update</a>
                         @if($category->posts()->count() > 0)
                             <div
                                     class="d-grid gap-2"
@@ -79,17 +100,17 @@
                                     data-bs-title="Can't delete category related to posts"
                                     data-bs-placement="left"
                             >
-                                <a href="/category/{{ $category['id'] }}/delete"
+                                <a href="/category/{{ $category->id }}/delete"
                                    class="btn btn-danger disabled">Delete</a>
                             </div>
                         @else
-                            <a href="/category/{{ $category['id'] }}/delete" class="btn btn-danger">Delete</a>
+                            <a href="/category/{{ $category->id }}/delete" class="btn btn-danger">Delete</a>
                         @endif
                     @endif
                 </th>
             </tr>
         @empty
-            <p>Empty!</p>
+            <td colspan="7" style="text-align: center">No categories found!</td>
         @endforelse
         </tbody>
     </table>
