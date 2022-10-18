@@ -1,22 +1,25 @@
 <?php
 
+namespace Hillel;
+
 use Hillel\Interfaces\PizzaInterface;
 
 class PizzaCalculator
 {
-    public PizzaInterface $pizza;
-    public float $price = 0;
-    public array $order;
-    public array $ingredients = [];
+    protected float $price;
+    protected array $pizzasList;
+    protected array $ingredients;
 
-    public function __construct(PizzaInterface $pizza)
+    public function __construct()
     {
-        $this->pizza = $pizza;
+        $this->price = 0;
+        $this->pizzasList = [];
+        $this->ingredients = [];
     }
 
     public function add(PizzaInterface $pizza)
     {
-        $this->order[] = $pizza->getTitle();
+        $this->pizzasList[] = $pizza->getTitle();
         $this->price += $pizza->getCost();
         $this->addIngredients($pizza);
     }
@@ -38,15 +41,15 @@ class PizzaCalculator
 
     public function price()
     {
-        echo $this->pizza->getCost();
+        echo $this->price;
     }
 
-    public function printOrder()
+    public function getOrder()
     {
-        return [
-            'Pizzas' => $this->order,
+        return json_encode([
+            'Pizzas' => $this->pizzasList,
             'Ingredients' => $this->ingredients,
-            'Price' => $this->price,
-        ];
+            'Total' => $this->price,
+        ], JSON_PRETTY_PRINT);
     }
 }

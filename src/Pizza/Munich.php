@@ -6,43 +6,39 @@ use Hillel\Interfaces\PizzaInterface;
 
 class Munich implements PizzaInterface
 {
-    private float $cost;
-    private array $ingredients;
+    protected string $title;
+    protected float $cost;
+    protected array $ingredients;
 
-    const NAME = 'Munich Pizza';
-
-    public function __construct(float $cost, array $ingredients)
+    public function __construct()
     {
-        $this->setCost($cost);
-        $this->setIngredients($ingredients);
+        $this->title = 'Munich';
+        $this->cost = 285;
+        $this->ingredients = [
+            'Munich sausages',
+            'Bavarian sausages',
+            'Pepperoni',
+            'Cherry tomatoes',
+            'Pickles',
+            'Onions',
+            'Mozzarella cheese',
+            'Emmental cheese',
+            'Pilatti sauce'
+        ];
     }
 
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
 
     public function getCost(): float
     {
         return $this->cost;
     }
 
-    public function setCost(float $cost): void
-    {
-        $this->cost = $cost;
-    }
-
     public function getIngredients(): array
     {
         return $this->ingredients;
-    }
-
-    public function setIngredients(array $ingredients)
-    {
-        $this->ingredients = $ingredients;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return self::NAME;
     }
 }

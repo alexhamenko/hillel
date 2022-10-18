@@ -6,43 +6,38 @@ use Hillel\Interfaces\PizzaInterface;
 
 class Mexican implements PizzaInterface
 {
-    private float $cost;
-    private array $ingredients;
+    protected string $title;
+    protected float $cost;
+    protected array $ingredients;
 
-    const NAME = 'Mexican Pizza';
-
-    public function __construct(float $cost, array $ingredients)
+    public function __construct()
     {
-        $this->setCost($cost);
-        $this->setIngredients($ingredients);
+        $this->title = 'Mexican';
+        $this->cost = 175;
+        $this->ingredients = [
+            'Cream cheese sauce',
+            'Chicken thigh',
+            'Mozzarella cheese',
+            'Pineapple and corn salsa',
+            'Guacamole',
+            'Nachos chips',
+            'Green chili pepper',
+            'Cilantro'
+        ];
     }
 
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
 
     public function getCost(): float
     {
         return $this->cost;
     }
 
-    public function setCost(float $cost): void
-    {
-        $this->cost = $cost;
-    }
-
     public function getIngredients(): array
     {
         return $this->ingredients;
-    }
-
-    public function setIngredients(array $ingredients)
-    {
-        $this->ingredients = $ingredients;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return self::NAME;
     }
 }
