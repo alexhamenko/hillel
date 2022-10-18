@@ -17,6 +17,21 @@ class PizzaCalculator
         $this->ingredients = [];
     }
 
+    public function getPizzas(): array
+    {
+        return $this->pizzasList;
+    }
+
+    public function getIngredients(): array
+    {
+        return $this->ingredients;
+    }
+
+    public function getPrice(): float
+    {
+        return $this->price;
+    }
+
     public function add(PizzaInterface $pizza)
     {
         $this->pizzasList[] = $pizza->getTitle();
@@ -26,30 +41,24 @@ class PizzaCalculator
 
     public function addIngredients(PizzaInterface $pizza)
     {
-        foreach($pizza->getIngredients() as $ingredient) {
-            if( !in_array($ingredient,$this->ingredients))
-            {
-                array_push($this->ingredients,$ingredient);
+        foreach ($pizza->getIngredients() as $ingredient) {
+            if (!in_array($ingredient, $this->ingredients)) {
+                array_push($this->ingredients, $ingredient);
             }
         }
     }
 
-    public function ingredients():array
-    {
-        return $this->ingredients;
-    }
-
-    public function price()
+    public function printPrice()
     {
         echo $this->price;
     }
 
-    public function getOrder()
+    public function getOrder(): string
     {
         return json_encode([
-            'Pizzas' => $this->pizzasList,
-            'Ingredients' => $this->ingredients,
-            'Total' => $this->price,
+            'Pizzas' => $this->getPizzas(),
+            'Ingredients' => $this->getIngredients(),
+            'Total' => $this->getPrice(),
         ], JSON_PRETTY_PRINT);
     }
 }
